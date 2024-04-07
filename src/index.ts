@@ -260,9 +260,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 })
 
-document.addEventListener('click', () => {
+gameElement.addEventListener('click', e => {
 	if (isMobile) {
 		const input = document.querySelector('input')
+
 		input.focus()
 	}
 })
