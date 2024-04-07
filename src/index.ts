@@ -214,7 +214,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const input = document.createElement("input");
     input.type = "text";
     input.style.position = "absolute";
-    input.style.top = "0";
+    input.style.top = "50%";
+    input.style.transform = "translateY(-50%)";
     input.style.left = "0";
     input.style.width = "0";
     input.style.height = "0";
@@ -255,7 +256,7 @@ document.addEventListener("DOMContentLoaded", () => {
         mistakes++;
       }
 
-      input.value = "";
+      input.value = " ";
     });
   }
 });
