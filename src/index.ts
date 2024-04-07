@@ -188,7 +188,9 @@ backElement.addEventListener('click', () => {
 	finishElement.style.display = 'none'
 })
 
-themeBtnElement.addEventListener('click', () => {
+themeBtnElement.addEventListener('click', e => {
+	e.stopPropagation()
+
 	themeElement.style.display = 'block'
 	gameElement.style.display = 'none'
 	finishElement.style.display = 'none'
