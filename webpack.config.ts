@@ -20,7 +20,7 @@ export default (env: { mode: 'development' | 'production' }) => {
 		output: {
 			filename: '[name].[contenthash].js',
 			path: path.resolve(__dirname, 'build'),
-			assetModuleFilename: path.join('images', '[name].[contenthash][ext]'),
+			assetModuleFilename: 'images/[name].[contenthash][ext]',
 			clean: true,
 		},
 		module: {

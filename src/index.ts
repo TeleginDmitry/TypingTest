@@ -3,6 +3,7 @@ import { getText } from "./services/text.service";
 
 const finishElement = document.querySelector("#finish") as HTMLDivElement;
 const gameElement = document.querySelector("#game") as HTMLDivElement;
+const themeElement = document.querySelector("#theme") as HTMLDivElement;
 
 const correctElement = document.querySelector("#correct") as HTMLSpanElement;
 const incorrectElement = document.querySelector(
@@ -13,6 +14,10 @@ const restartElement = document.querySelector("#restart") as HTMLButtonElement;
 const timeElement = document.querySelector("#time") as HTMLSpanElement;
 
 const stopButton = document.querySelector("#stop") as HTMLButtonElement;
+
+const themeBtnElement = document.querySelector(
+  "#themeBtn",
+) as HTMLButtonElement;
 
 const content = document.querySelector("#content") as HTMLDivElement;
 let mistakes = 0;
@@ -56,6 +61,7 @@ document.addEventListener("keydown", (e) => {
   const contentSpan = span?.textContent;
 
   stopButton.style.display = "block";
+  themeBtnElement.style.display = "none";
 
   if (!code.includes("Key")) {
     mistakes++;
@@ -144,6 +150,48 @@ restartElement.addEventListener("click", async () => {
 
   stopButton.style.display = "none";
 
+  themeBtnElement.style.display = "block";
+
   finishElement.style.display = "none";
   gameElement.style.display = "block";
+});
+
+// background
+
+const examplesElement = document.querySelectorAll(
+  "#examples li",
+) as NodeListOf<HTMLLIElement>;
+
+const backElement = document.querySelector("#back") as HTMLButtonElement;
+
+examplesElement.forEach((example) => {
+  example.addEventListener("click", () => {
+    const id = example.id;
+
+    localStorage.setItem("theme", id);
+
+    document.body.classList.remove(...document.body.classList);
+    document.body.classList.add(id);
+  });
+});
+
+backElement.addEventListener("click", () => {
+  themeElement.style.display = "none";
+  gameElement.style.display = "block";
+  finishElement.style.display = "none";
+});
+
+themeBtnElement.addEventListener("click", () => {
+  themeElement.style.display = "block";
+  gameElement.style.display = "none";
+  finishElement.style.display = "none";
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (localStorage.getItem("theme")) {
+    const theme = localStorage.getItem("theme");
+
+    document.body.classList.remove(...document.body.classList);
+    document.body.classList.add(theme);
+  }
 });

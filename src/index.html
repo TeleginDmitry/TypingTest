@@ -5,13 +5,23 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
 	</head>
-	<body>
+	<body class="floating-squares" style="position: relative">
+		<div class="area hidden absolute top-0 left-0 w-full h-full">
+			<ul class="circles">
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+
 		<main>
-			<img
-				src="./images/wood.jpg"
-				alt="Фон для игры"
-				class="absolute top-0 left-0 w-full h-full object-cover"
-			/>
 			<section id="game" class="relative z-10">
 				<div class="flex items-center p-4 min-h-screen">
 					<div
@@ -24,6 +34,12 @@
 						class="absolute bottom-5 left-1/2 transform -translate-x-1/2 bg-[rgba(255,170,60,0.9)] text-white px-4 py-2 rounded hover:bg-[rgba(255,170,60,1)] cursor-pointer hover:duration-200 hidden"
 					>
 						Завершить
+					</button>
+					<button
+						id="themeBtn"
+						class="absolute bottom-5 left-1/2 transform -translate-x-1/2 bg-[rgba(255,170,60,0.9)] text-white px-4 py-2 rounded hover:bg-[rgba(255,170,60,1)] cursor-pointer hover:duration-200"
+					>
+						Выбрать тему
 					</button>
 				</div>
 
@@ -43,11 +59,88 @@
 
 						<button
 							id="restart"
-							class="bg-[rgba(255,170,60,0.9)] text-white px-4 py-2 rounded hover:bg-[rgba(255,170,60,1)] cursor-pointer hover:duration-200"
+							class="bg-[rgba(255,170,60,0.9)] text-white px-14 py-2 rounded hover:bg-[rgba(255,170,60,1)] cursor-pointer hover:duration-200"
 						>
 							Начать заново
 						</button>
 					</div>
+				</div>
+			</section>
+			<section id="theme" class="relative z-10 hidden">
+				<div class="p-4 min-h-screen flex flex-col gap-3">
+					<div class="flex flex-col gap-4">
+						<h2 class="text-2xl text-white">Анимированные картинки</h2>
+						<ul
+							id="examples"
+							class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-white text-lg tracking-wide"
+						>
+							<li
+								id="floating-squares"
+								class="flex flex-col gap-3 cursor-pointer"
+							>
+								<img
+									class="object-cover h-40"
+									src="./images/examples/floating-squares.png"
+									alt="floating-squares"
+								/>
+								<p>Плавающие квадраты</p>
+							</li>
+							<li id="gradient" class="flex flex-col gap-3 cursor-pointer">
+								<img
+									class="object-cover h-40"
+									src="./images/examples/gradient.png"
+									alt="gradient"
+								/>
+								<p>Переливающиеся градиент</p>
+							</li>
+							<li id="multicolored" class="flex flex-col gap-3 cursor-pointer">
+								<img
+									class="object-cover h-40"
+									src="./images/examples/multicolored.png"
+									alt="multicolored"
+								/>
+								<p>Разноцветность</p>
+							</li>
+						</ul>
+					</div>
+					<div class="flex flex-col gap-4">
+						<h2 class="text-2xl text-white">Картинки</h2>
+						<ul
+							id="examples"
+							class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-white text-lg tracking-wide"
+						>
+							<li id="wood" class="flex flex-col gap-3 cursor-pointer">
+								<img
+									class="object-cover h-40"
+									src="./images/wood.jpg"
+									alt="wood"
+								/>
+								<p>Дерево</p>
+							</li>
+							<li id="new-york" class="flex flex-col gap-3 cursor-pointer">
+								<img
+									class="object-cover h-40"
+									src="./images/new-york.jpg"
+									alt="new-york"
+								/>
+								<p>New York</p>
+							</li>
+							<li id="forest" class="flex flex-col gap-3 cursor-pointer">
+								<img
+									class="object-cover h-40"
+									src="./images/forest.png"
+									alt="forest"
+								/>
+								<p>Лес</p>
+							</li>
+						</ul>
+					</div>
+					<button
+						id="back"
+						class="bg-[rgba(255,170,60,0.9)] text-white px-14 py-2 rounded hover:bg-[rgba(255,170,60,1)] cursor-pointer hover:duration-200 mx-auto"
+					>
+						Назад
+					</button>
 				</div>
 			</section>
 		</main>
