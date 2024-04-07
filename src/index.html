@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<main>
+			<img
+				src="./images/wood.jpg"
+				alt="Фон для игры"
+				class="absolute top-0 left-0 w-full h-full object-cover"
+			/>
+			<section id="game" class="relative z-10">
+				<div class="flex items-center p-4 min-h-screen">
+					<div
+						id="content"
+						class="text-xl text-white/80 h-auto font-medium tracking-wide max-w-3xl m-auto"
+					></div>
+
+					<button
+						id="stop"
+						class="absolute bottom-5 left-1/2 transform -translate-x-1/2 bg-[rgba(255,170,60,0.9)] text-white px-4 py-2 rounded hover:bg-[rgba(255,170,60,1)] cursor-pointer hover:duration-200"
+					>
+						Завершить
+					</button>
+				</div>
+
+				<div id="timer" class="absolute top-5 right-5 text-white/80 text-lg">
+					<span id="minutes">00</span>:<span id="seconds">00</span>
+				</div>
+			</section>
+			<section id="finish" class="relative z-10 hidden">
+				<div class="flex items-center p-4 min-h-screen justify-center">
+					<div
+						class="text-xl text-white/80 h-auto font-medium tracking-wide max-w-3xl flex flex-col gap-3"
+					>
+						<p>Время: <span id="time"></span></p>
+						<p>Кол. правильных: <span id="correct"></span></p>
+						<p>Кол. неправильных: <span id="incorrect"></span></p>
+						<p>Скорость печати: <span id="wpm"></span></p>
+
+						<button
+							id="restart"
+							class="bg-[rgba(255,170,60,0.9)] text-white px-4 py-2 rounded hover:bg-[rgba(255,170,60,1)] cursor-pointer hover:duration-200"
+						>
+							Начать заново
+						</button>
+					</div>
+				</div>
+			</section>
+		</main>
+	</body>
+</html>

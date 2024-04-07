@@ -1,0 +1,131 @@
+import "./main.css";
+import { getText } from "./services/text.service";
+
+const finishElement = document.querySelector("#finish") as HTMLDivElement;
+const gameElement = document.querySelector("#game") as HTMLDivElement;
+
+const correctElement = document.querySelector("#correct") as HTMLSpanElement;
+const incorrectElement = document.querySelector(
+  "#incorrect",
+) as HTMLSpanElement;
+const wpmElement = document.querySelector("#wpm") as HTMLSpanElement;
+const restartElement = document.querySelector("#restart") as HTMLButtonElement;
+const timeElement = document.querySelector("#time") as HTMLSpanElement;
+
+const content = document.querySelector("#content") as HTMLDivElement;
+let mistakes = 0;
+let correct = 0;
+let wpm = 0;
+
+async function addTextToContent() {
+  const { text, status } = await getText();
+
+  if (status !== "success") {
+    return;
+  }
+
+  content.innerHTML = "";
+
+  const lettersArray = text.split("");
+
+  lettersArray.forEach((letter, index) => {
+    const span = document.createElement("span");
+
+    if (index === 0) {
+      span.classList.add("active");
+    }
+
+    span.textContent = letter;
+    content.append(span);
+  });
+}
+
+document.addEventListener("keydown", (e) => {
+  const key = e.key;
+  const code = e.code;
+
+  const span = document.querySelector("span.active");
+  const contentSpan = span?.textContent;
+
+  if (!code.includes("Key")) {
+    mistakes++;
+  }
+
+  if (key === contentSpan) {
+    correct++;
+
+    wpm = Math.round(correct / 5 / (time / 60));
+
+    span.classList.remove("active");
+    span.classList.add("toggled");
+
+    const nextSpan = span.nextElementSibling;
+
+    if (nextSpan) {
+      nextSpan.classList.add("active");
+    } else {
+      addTextToContent();
+    }
+  }
+});
+
+addTextToContent();
+
+// timer
+
+const seconds = document.querySelector("#seconds") as HTMLSpanElement;
+const minutes = document.querySelector("#minutes") as HTMLSpanElement;
+
+const stopButton = document.querySelector("#stop") as HTMLButtonElement;
+
+let time = 0;
+let secondsCount = 0;
+let minutesCount = 0;
+
+function getSeconds() {
+  return secondsCount < 10 ? `0${secondsCount}` : `${secondsCount}`;
+}
+
+function getMinutes() {
+  return minutesCount < 10 ? `0${minutesCount}` : `${minutesCount}`;
+}
+
+function startTimer() {
+  return setInterval(() => {
+    time++;
+    secondsCount = time % 60;
+    minutesCount = (time - secondsCount) / 60;
+
+    seconds.textContent = getSeconds();
+    minutes.textContent = getMinutes();
+  }, 1000);
+}
+
+startTimer();
+
+function stopTimer() {
+  clearInterval(startTimer());
+
+  gameElement.style.display = "none";
+  finishElement.style.display = "block";
+
+  correctElement.textContent = correct.toString();
+  incorrectElement.textContent = mistakes.toString();
+  wpmElement.textContent = wpm.toString();
+  timeElement.textContent = `${getMinutes()}:${getSeconds()}`;
+}
+
+stopButton.addEventListener("click", stopTimer);
+
+// finish
+
+restartElement.addEventListener("click", () => {
+  time = 0;
+  mistakes = 0;
+  correct = 0;
+  wpm = 0;
+  addTextToContent();
+
+  finishElement.style.display = "none";
+  gameElement.style.display = "block";
+});
