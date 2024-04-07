@@ -28,6 +28,11 @@ let wpm = 0;
 
 let interval: string | number | NodeJS.Timeout = null;
 
+const isMobile =
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent,
+  );
+
 async function addTextToContent() {
   const { text, status } = await getText();
 
@@ -197,5 +202,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.body.classList.remove(...document.body.classList);
     document.body.classList.add(theme);
+  }
+});
+
+// Mobile version
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (isMobile) {
+    const input = document.createElement("input");
+    input.type = "text";
+    input.style.position = "absolute";
+    input.style.top = "0";
+    input.style.left = "0";
+    input.style.width = "0";
+    input.style.height = "0";
+    input.style.opacity = "0";
+    document.body.appendChild(input);
+  }
+});
+
+document.addEventListener("click", () => {
+  if (isMobile) {
+    const input = document.querySelector("input");
+    input.focus();
   }
 });
