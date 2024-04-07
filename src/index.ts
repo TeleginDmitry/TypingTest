@@ -124,7 +124,9 @@ function callbackInterval() {
 	minutes.textContent = getMinutes()
 }
 
-function stopTimer() {
+function stopTimer(e: MouseEvent) {
+	e.stopPropagation()
+
 	clearInterval(interval)
 
 	gameElement.style.display = 'none'
