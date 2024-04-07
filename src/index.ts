@@ -15,6 +15,8 @@ const timeElement = document.querySelector("#time") as HTMLSpanElement;
 
 const stopButton = document.querySelector("#stop") as HTMLButtonElement;
 
+const keyboardElement = document.querySelector("#keyboard") as HTMLSpanElement;
+
 const themeBtnElement = document.querySelector(
   "#themeBtn",
 ) as HTMLButtonElement;
@@ -62,6 +64,8 @@ document.addEventListener("keydown", (e) => {
 
   stopButton.style.display = "block";
   themeBtnElement.style.display = "none";
+
+  keyboardElement.innerText = key;
 
   if (!code.includes("Key")) {
     mistakes++;
