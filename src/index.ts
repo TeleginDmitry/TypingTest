@@ -60,7 +60,7 @@ async function addTextToContent() {
   });
 }
 
-document.addEventListener("keydown", (e) => {
+function writeLetter(e: KeyboardEvent) {
   const key = e.key;
   const code = e.code;
 
@@ -96,7 +96,9 @@ document.addEventListener("keydown", (e) => {
       addTextToContent();
     }
   }
-});
+}
+
+document.addEventListener("keydown", writeLetter);
 
 addTextToContent();
 
@@ -218,6 +220,43 @@ document.addEventListener("DOMContentLoaded", () => {
     input.style.height = "0";
     input.style.opacity = "0";
     document.body.appendChild(input);
+
+    input.addEventListener("input", (e) => {
+      const value = (e.target as HTMLInputElement).value;
+
+      const span = document.querySelector("span.active");
+      const contentSpan = span?.textContent;
+
+      stopButton.style.display = "block";
+      themeBtnElement.style.display = "none";
+
+      keyboardElement.innerText = value;
+
+      if (interval === null) {
+        interval = setInterval(callbackInterval, 1000);
+      }
+
+      if (value === contentSpan) {
+        correct++;
+
+        wpm = Math.round(correct / 5 / (time / 60));
+
+        span.classList.remove("active");
+        span.classList.add("toggled");
+
+        const nextSpan = span.nextElementSibling;
+
+        if (nextSpan) {
+          nextSpan.classList.add("active");
+        } else {
+          addTextToContent();
+        }
+      } else {
+        mistakes++;
+      }
+
+      input.value = "";
+    });
   }
 });
 
