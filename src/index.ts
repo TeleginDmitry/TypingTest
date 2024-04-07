@@ -28,6 +28,42 @@ let wpm = 0;
 
 let interval: string | number | NodeJS.Timeout = null;
 
+const russianLetters = [
+  "а",
+  "б",
+  "в",
+  "г",
+  "д",
+  "е",
+  "ё",
+  "ж",
+  "з",
+  "и",
+  "й",
+  "к",
+  "л",
+  "м",
+  "н",
+  "о",
+  "п",
+  "р",
+  "с",
+  "т",
+  "у",
+  "ф",
+  "х",
+  "ц",
+  "ч",
+  "ш",
+  "щ",
+  "ъ",
+  "ы",
+  "ь",
+  "э",
+  "ю",
+  "я",
+];
+
 const isMobile =
   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent,
@@ -240,8 +276,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       keyboardElement.innerText = value;
 
-      if (interval === null) {
+      const isRussianLetter = russianLetters.includes(value.toLowerCase());
+
+      if (isRussianLetter && interval === null) {
         interval = setInterval(callbackInterval, 1000);
+      }
+
+      if (isRussianLetter && value !== contentSpan) {
+        mistakes++;
       }
 
       if (value === contentSpan) {
@@ -259,8 +301,6 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
           addTextToContent();
         }
-      } else {
-        mistakes++;
       }
 
       input.value = "";
