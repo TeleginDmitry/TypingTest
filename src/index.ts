@@ -1,3 +1,4 @@
+import { availableLetters, isMobile } from "./config";
 import "./main.css";
 import { getText } from "./services/text.service";
 
@@ -21,53 +22,37 @@ const themeBtnElement = document.querySelector(
   "#themeBtn",
 ) as HTMLButtonElement;
 
+const examplesElement = document.querySelectorAll(
+  "#examples li",
+) as NodeListOf<HTMLLIElement>;
+
+const seconds = document.querySelector("#seconds") as HTMLSpanElement;
+const minutes = document.querySelector("#minutes") as HTMLSpanElement;
+
+const backElement = document.querySelector("#back") as HTMLButtonElement;
+
 const content = document.querySelector("#content") as HTMLDivElement;
+
 let mistakes = 0;
 let correct = 0;
 let wpm = 0;
 
 let interval: string | number | NodeJS.Timeout = null;
 
-const russianLetters = [
-  "а",
-  "б",
-  "в",
-  "г",
-  "д",
-  "е",
-  "ё",
-  "ж",
-  "з",
-  "и",
-  "й",
-  "к",
-  "л",
-  "м",
-  "н",
-  "о",
-  "п",
-  "р",
-  "с",
-  "т",
-  "у",
-  "ф",
-  "х",
-  "ц",
-  "ч",
-  "ш",
-  "щ",
-  "ъ",
-  "ы",
-  "ь",
-  "э",
-  "ю",
-  "я",
-];
+function createSpan(letter: string, index: number) {
+  const span = document.createElement("span");
 
-const isMobile =
-  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent,
-  );
+  if (index === 0) {
+    span.classList.add("active");
+  }
+
+  span.classList.add("letter");
+
+  span.style.position = "relative";
+
+  span.textContent = letter;
+  content.append(span);
+}
 
 async function addTextToContent() {
   const { text, status } = await getText();
@@ -80,25 +65,11 @@ async function addTextToContent() {
 
   const lettersArray = text.split("");
 
-  lettersArray.forEach((letter, index) => {
-    const span = document.createElement("span");
-
-    if (index === 0) {
-      span.classList.add("active");
-    }
-
-    span.classList.add("letter");
-
-    span.style.position = "relative";
-
-    span.textContent = letter;
-    content.append(span);
-  });
+  lettersArray.forEach(createSpan);
 }
 
 function writeLetter(e: KeyboardEvent) {
   const key = e.key;
-  const code = e.code;
 
   const span = document.querySelector("span.active");
   const contentSpan = span?.textContent;
@@ -108,12 +79,14 @@ function writeLetter(e: KeyboardEvent) {
 
   keyboardElement.innerText = key;
 
-  if (code.includes("Key") && key !== contentSpan) {
-    mistakes++;
+  const isAvailableLetters = availableLetters.includes(key.toLowerCase());
+
+  if (isAvailableLetters && interval === null) {
+    interval = setInterval(callbackInterval, 1000);
   }
 
-  if (code.includes("Key") && interval === null) {
-    interval = setInterval(callbackInterval, 1000);
+  if (isAvailableLetters && key !== contentSpan) {
+    mistakes++;
   }
 
   if (key === contentSpan) {
@@ -139,9 +112,6 @@ document.addEventListener("keydown", writeLetter);
 addTextToContent();
 
 // timer
-
-const seconds = document.querySelector("#seconds") as HTMLSpanElement;
-const minutes = document.querySelector("#minutes") as HTMLSpanElement;
 
 let time = 0;
 let secondsCount = 0;
@@ -207,12 +177,6 @@ restartElement.addEventListener("click", async () => {
 
 // background
 
-const examplesElement = document.querySelectorAll(
-  "#examples li",
-) as NodeListOf<HTMLLIElement>;
-
-const backElement = document.querySelector("#back") as HTMLButtonElement;
-
 examplesElement.forEach((example) => {
   example.addEventListener("click", () => {
     const id = example.id;
@@ -276,13 +240,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       keyboardElement.innerText = value;
 
-      const isRussianLetter = russianLetters.includes(value.toLowerCase());
+      const isAvailableLetters = availableLetters.includes(value.toLowerCase());
 
-      if (isRussianLetter && interval === null) {
+      if (isAvailableLetters && interval === null) {
         interval = setInterval(callbackInterval, 1000);
       }
 
-      if (isRussianLetter && value !== contentSpan) {
+      if (isAvailableLetters && value !== contentSpan) {
         mistakes++;
       }
 
