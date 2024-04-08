@@ -5,11 +5,9 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "webpack serve --mode development",
-		"dev-tailwind": "npx tailwindcss -i ./src/styles.css -o ./src/output.css --watch",
 		"build-prod": "webpack --env mode=production",
 		"build-dev": "webpack --env mode=development",
-		"prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,scss}\"",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,scss}\""
 	},
 	"keywords": [],
 	"author": "",
